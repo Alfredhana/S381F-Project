@@ -1,0 +1,23 @@
+<HTML>
+    <BODY>
+    <h1>Update Product: <% c.forEach(function(p) { %> 
+        <%= p.name %> 
+        owned by <%= p.owner %>
+    </H1>
+    <%- include ('./partials/messages') %>
+    <form action='/api/update/<%= p.name %>' method="POST" enctype="multipart/form-data">
+      Borough: <input type='number' name='borough' value=0><br>
+      Cuisine: <input type='number' name='cuisine' value=0><br>
+      Photo: <input type='file' name='filetoupload'><br>
+      Photo_mimetype: <input type='text' name='photo_mimetype'><br>
+      Address: <input type='text' name='address'><br>
+      Grades: <input type='number' name='grades' value=0><br>
+      
+      <button type="submit" class="btn btn-primary btn-block">
+        Update
+      </button>
+    </form>
+
+    <% }); %>
+    </BODY>
+    </HTML>

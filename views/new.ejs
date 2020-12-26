@@ -1,0 +1,23 @@
+<HTML>
+    <BODY>
+    <head>
+      <title>New Product</H1></title>
+    </head>
+    <%- include ('./partials/messages') %>
+    <form action='/api/create' method="POST" enctype="multipart/form-data">
+      ID: <input type='text' name='restaurant_id' required><br>
+      Name: <input type='text' name='name' required><br>
+      Borough: <input type='number' name='borough' value=0><br>
+      Cuisine: <input type='number' name='cuisine' value=0><br>
+      Photo: <input type='file' name='filetoupload'><br>
+      Photo_mimetype: <input type='text' name='photo_mimetype'><br>
+      Address: <input type='text' name='address'><br>
+      Grades: <input type='number' name='grades' value=0><br>
+      Owner: <input type='text' name='owner' required><br>
+      
+      <button type="submit" class="btn btn-primary btn-block">
+        Create
+      </button>
+    </form>
+    </BODY>
+    </HTML>

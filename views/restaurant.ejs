@@ -1,0 +1,68 @@
+<HTML><BODY>
+    <H1>Restaurant Collection: (<%= c.length %> items)</H1>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Borough</th>
+        <th>Cuisine</th>
+        <th>Photo</th>
+        <th>Photo Mimetype</th>
+        <th>Address</th>
+        <th>Grades</th>
+        <th>Owner</th>
+        <th>Rate</th>
+        <th>New Rate</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <% c.forEach(function(p) { %>
+        <tr>
+          <% if (p.restaurant_id){ %>
+            <td><a><%= p.restaurant_id %></a></td>
+          <% } else { %>
+            <% p.restaurant_id = "0000" %>
+            <td><a><%= p.restaurant_id %></a></td>
+          <% } %>
+          <td><%= p.name %></td>
+          <td><%= p.borough %></td>
+          <td><%= p.cuisine %></td>
+          <% if (p.photo){ %>
+            <td><img src="data:<%= p.photo_mimetype %>;base64,<%= p.photo %>" alt="Red dot" /></td>
+          <% } else { %>
+            <td></td>
+            
+          <% } %>
+          <td><%= p.photo_mimetype %></td>
+          <td><%= p.address %></td>
+          <td><%= p.grades %></td>
+          <td><%= p.owner %></td>
+          <td><%= p.rate %></td>
+          <% if (owner == p.owner){ %>
+            <th>
+              <form action='/api/rate/<%= p.name %>' method="POST">
+              <select name="rate" id="rate">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              </th>
+            <th><button type="submit" class="btn btn-primary btn-block">Confirm my Rating</button></th>
+            </form>
+            <th><a href="/api/update/<%= p.name %>">Update</a></th>
+            <th><a href="/api/delete/<%= p.name %>">Delete</a></th>
+          <% } %>
+        </tr>
+      <% });                     %>
+    </table>
+    <br>
+    <a href="/users/dashboard">Back</a>
+    </script>
+    </BODY></HTML>
