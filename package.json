@@ -4,8 +4,10 @@
     "author": "Raymond SO <rso@ouhk.edu.hk>",
     "version": "0.0.1",
     "dependencies": {
+        "aws-serverless-express": "^3.4.0",
         "bcrypt": "^5.0.0",
         "bcryptjs": "^2.4.3",
+        "cf": "0.0.3",
         "connect-flash": "^0.1.1",
         "cookie-session": "^1.4.0",
         "ejs": "^3.1.5",
@@ -14,6 +16,7 @@
         "express-formidable": "^1.2.0",
         "express-session": "^1.17.1",
         "formidable": "^1.2.2",
+        "fs": "0.0.1-security",
         "mongodb": "^3.1.13",
         "mongoose": "^5.11.8",
         "passport": "^0.4.1",
@@ -23,5 +26,8 @@
     "engine": "node >= 0.10.0",
     "scripts": {
         "start": "node server"
+    },
+    "devDependencies": {
+        "claudia": "^5.12.0"
     }
 }

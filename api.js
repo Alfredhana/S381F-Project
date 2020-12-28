@@ -16,7 +16,7 @@ app.use(session({
 const { render } = require('ejs');
 const router = express.Router();
 
-const fs = require('fs');
+let fs = require('fs');
 const assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
 const mongourl = 'mongodb+srv://alfredljm:8484037409a@cluster0.eshyv.mongodb.net/test?retryWrites=true&w=majority';  // MongoDB Atlas Connection URL
@@ -95,7 +95,10 @@ router.get('/delete/:name',function(req,res) {
   doc['name'] = req.params.name;
   Restaraunt.deleteOne(doc,(err,results) => {
     console.log('Delete: '+results.result.nModified+" documents");
-    res.render('restaurant');
+  });
+  Restaraunt.find({}).toArray(function(err, results) {
+    if (err) throw err;
+    res.render('restaurant', {c: results, owner: req.session.user});	
   });
 });
 
@@ -118,28 +121,31 @@ router.post('/create', function(req, res){
   let newDoc = {};
   const form = new formidable.IncomingForm();
   form.parse(req, (err, fields, files) => {
-    if (files.filetoupload && files.filetoupload.size > 0) {
-        fs.readFile(files.filetoupload.path, (err,data) => {
-          newDoc['photo'] = new Buffer.from(data).toString('base64');
-          newDoc['photo_mimetype'] = fields.photo_mimetype;
-        })
-    } else {
-      console.log('No file created!');
-    }
-
+    
     newDoc['name'] = fields.name;
     newDoc['restaurant_id'] = fields.restaurant_id;
     newDoc['name'] = fields.name;
     newDoc['borough'] = fields.borough;
     newDoc['cuisine'] = fields.cuisine;
+    newDoc['photo'] = "";
+    newDoc['photo_mimetype'] = "";
+    if (files.filetoupload && files.filetoupload.size > 0) {
+        fs.readFile(files.filetoupload.path, (err,data) => {
+          newDoc['photo'] = new Buffer.from(data).toString('base64');
+          newDoc['photo_mimetype'] = fields.photo_mimetype;
+          console.log("file created!");
+        })
+    } else {
+      console.log('No file created!');
+    }
     newDoc['address'] = fields.address;
     newDoc['grades'] = fields.grades;
     newDoc['owner'] = fields.owner;
     Restaraunt.insertOne(newDoc,(err,results) => {
       console.log('Inserted: '+results.result.nModified+" documents");
     });
-    res.redirect('/api/restaurant');
   });
+  res.redirect('/api/restaurant');
 });
 
 router.post('/update/:name', function(req, res){
@@ -150,7 +156,7 @@ router.post('/update/:name', function(req, res){
     if (files.filetoupload && files.filetoupload.size > 0) {
         fs.readFile(files.filetoupload.path, (err,data) => {
           updateDoc['photo'] = new Buffer.from(data).toString('base64');
-          updateDoc['photo_mimetype'] = files.filetoupload.type;
+          updateDoc['photo_mimetype'] = fields.photo_mimetype;
         })
     } else {
       console.log('No file uploaded!');

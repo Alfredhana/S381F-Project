@@ -36,4 +36,8 @@ app.use('/', require('./index'));
 app.use('/users', require('./users'));
 app.use('/api/',require('./api'));
 
-app.listen(8099);
+const port = process.env.PORT || 8099
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })

@@ -38,9 +38,8 @@
           <td><%= p.grades %></td>
           <td><%= p.owner %></td>
           <td><%= p.rate %></td>
-          <% if (owner == p.owner){ %>
-            <th>
-              <form action='/api/rate/<%= p.name %>' method="POST">
+          <th>
+            <form action='/api/rate/<%= p.name %>' method="POST">
               <select name="rate" id="rate">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -53,9 +52,11 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
               </select>
-              </th>
-            <th><button type="submit" class="btn btn-primary btn-block">Confirm my Rating</button></th>
+              <th><button type="submit" class="btn btn-primary btn-block">Confirm my Rating</button></th>
             </form>
+          </th>
+          <% if (owner == p.owner){ %>
+            
             <th><a href="/api/update/<%= p.name %>">Update</a></th>
             <th><a href="/api/delete/<%= p.name %>">Delete</a></th>
           <% } %>
