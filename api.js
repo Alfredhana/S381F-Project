@@ -133,6 +133,7 @@ router.post('/create', function(req, res){
         fs.readFile(files.filetoupload.path, (err,data) => {
           newDoc['photo'] = new Buffer.from(data).toString('base64');
           newDoc['photo_mimetype'] = fields.photo_mimetype;
+          con
           console.log("file created!");
         })
     } else {
